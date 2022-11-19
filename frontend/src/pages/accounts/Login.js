@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {Form, Button, Input, notification, Card} from "antd";
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import Axios from "axios";
 import {SmileOutlined, FrownOutlined} from "@ant-design/icons";
 import { useAppContext } from "store";
@@ -8,10 +8,12 @@ import { setToken } from "store";
 
 export default function Login(){
     const {dispatch} = useAppContext();
+    const location = useLocation();
     const navigate = useNavigate();
     const [fieldErrors, setFieldErrors] = useState({});
     
-
+    const {from: loginRedirectUrl} = location.state || {from:{pathname:"/"}}
+    
 
     const onFinish = (values) =>{
         async function fn(){
@@ -28,7 +30,7 @@ export default function Login(){
                     message: "로그인 성공",
                     icon: <SmileOutlined style={{color:"#108ee9"}}/>
                 })
-                navigate("/");
+                navigate(loginRedirectUrl);
             }
             catch(error){
                 if(error.response){

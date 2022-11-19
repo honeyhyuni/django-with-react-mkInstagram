@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     # third apps
     'corsheaders',
     'rest_framework',
+    'django_pydenticon',
     # local apps
     'instagram',
     'accounts',
