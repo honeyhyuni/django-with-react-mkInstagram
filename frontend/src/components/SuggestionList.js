@@ -4,6 +4,7 @@ import { Card } from "antd";
 import Suggestion from "./Suggestion";
 import useAxios from "axios-hooks";
 import { useAppContext } from "store";
+import Axios from "axios";
 
 // api 조회 목적에선 useAxios 가급적 사용
 export default function SuggestionList({style}){
@@ -28,11 +29,20 @@ export default function SuggestionList({style}){
     }, [origUserList]);
 
     const onFollowUser = (username) =>{
-        setUserList(prevUserList => {
-            return prevUserList.map(user => 
-                (user.username === username) ? {...user, is_follow:true}: user
-            )
+        const data = {username};
+        const config = {headers};
+        Axios.post("http://localhost:8000/accounts/follow/", data, config)
+        .then(response => {
+            setUserList(prevUserList => {
+                return prevUserList.map(user => 
+                    (user.username === username) ? {...user, is_follow:true}: user
+                )
+            })
         })
+        .catch(error => {
+            console.log(error);
+        })
+        
     }
     
 
