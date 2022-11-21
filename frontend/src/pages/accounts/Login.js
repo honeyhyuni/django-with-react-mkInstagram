@@ -3,8 +3,8 @@ import {Form, Button, Input, notification, Card} from "antd";
 import {useLocation, useNavigate} from "react-router-dom";
 import Axios from "axios";
 import {SmileOutlined, FrownOutlined} from "@ant-design/icons";
-import { useAppContext } from "store";
-import { setToken } from "store";
+import { useAppContext, setToken } from "store";
+import { parseErrorMessages } from "pages/utils/forms";
 
 export default function Login(){
     const {dispatch} = useAppContext();
@@ -40,14 +40,9 @@ export default function Login(){
                         icon: <FrownOutlined style={{color: "#ff3333"}}/>
                     })
                     const {data: fieldsErrorMessages} = error.response
+                    
                     setFieldErrors(
-                        Object.entries(fieldsErrorMessages).reduce((acc , [fieldName, errors]) => {
-                            acc[fieldName] = {
-                                 validateStatus: "error",
-                                 help: errors.join(" ")
-                            }
-                            return acc;
-                        }, {})
+                        parseErrorMessages(fieldsErrorMessages)
                     );
                 }
 

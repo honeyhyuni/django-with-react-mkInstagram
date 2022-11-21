@@ -5,7 +5,7 @@ import StoryList from "./StoryList";
 import SuggestionList from "./SuggestionList";
 import LogoImage from "assets/instagram_main.png";
 
-function AppLayout({children}) {
+function AppLayout({children, sidebar}) {
     return(
         <div className="app">
             <div className="header">
@@ -22,13 +22,8 @@ function AppLayout({children}) {
                 </div>
             </div>
             <div className="contents">{children}</div>        
-            <div className="sidebar">
-                <StoryList style={{marginBottom:"1rem"}} />
-                <SuggestionList style={{marginBottom:"1rem"}} />
-            </div>
-            <div className="footer">
-                &copy; Instgarm 2022.v
-            </div>
+            <div className="sidebar">{sidebar}</div>
+            <div className="footer">&copy; Instgarm 2022.v</div>
         </div>
     );
 }
