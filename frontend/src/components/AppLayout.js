@@ -1,8 +1,6 @@
 import React from "react";
 import "./AppLayout.scss";
 import {Input, Menu} from "antd";
-import StoryList from "./StoryList";
-import SuggestionList from "./SuggestionList";
 import LogoImage from "assets/instagram_main.png";
 
 function AppLayout({children, sidebar}) {
@@ -10,7 +8,7 @@ function AppLayout({children, sidebar}) {
         <div className="app">
             <div className="header">
                 <h1 className="page-title">
-                    <img src={LogoImage} alt="logo" style={{width:"150px"}}/>
+                    <img src={LogoImage} alt="logo" style={{width:"150px"}} />
                 </h1>
                 <div className="search"><Input.Search /></div>
                 <div className="topnav">

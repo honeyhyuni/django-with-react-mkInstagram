@@ -2,9 +2,8 @@ import React, { useEffect, useMemo, useState} from "react";
 import "./SuggestionList.scss";
 import { Card } from "antd";
 import Suggestion from "./Suggestion";
-import useAxios from "axios-hooks";
 import { useAppContext } from "store";
-import Axios from "axios";
+import { axiosInstance, useAxios } from "api";
 
 // api 조회 목적에선 useAxios 가급적 사용
 export default function SuggestionList({style}){
@@ -15,7 +14,7 @@ export default function SuggestionList({style}){
     
     const headers = {Authorization: `JWT ${jwtToken}`}
     const [{data:origUserList, loading, error}, refetch] = useAxios({
-        url:"http://localhost:8000/accounts/suggestions/",
+        url:"/accounts/suggestions/",
         headers,
     })
 
@@ -31,7 +30,7 @@ export default function SuggestionList({style}){
     const onFollowUser = (username) =>{
         const data = {username};
         const config = {headers};
-        Axios.post("http://localhost:8000/accounts/follow/", data, config)
+        axiosInstance.post("/accounts/follow/", data, config)
         .then(response => {
             setUserList(prevUserList => {
                 return prevUserList.map(user => 

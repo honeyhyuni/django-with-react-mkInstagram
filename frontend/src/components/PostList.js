@@ -1,8 +1,8 @@
 import React from "react";
-import useAxios from "axios-hooks";
 import Post from "./Post";
 import {useAppContext} from "store";
 import { Alert } from "antd";
+import { axiosInstance, useAxios } from "api";
 
 
 function PostList() {
@@ -10,10 +10,27 @@ function PostList() {
 
     const headers = {Authorization: `JWT ${jwtToken}`};
     const [{data:postList, loading, error}, refetch] = useAxios({
-        url:"http://localhost:8000/api/posts/",
+        url:"/api/posts/",
         headers,
     });
    
+    const handleLike = async ({post, isLike}) => {
+        const apiUrl = `api/posts/${post.id}/like/`;
+        const method = isLike ? "POST" : "DELETE"
+        try{
+            const response = await axiosInstance(
+                {
+                    url: apiUrl,
+                    method,
+                    headers,
+                }
+            )
+            refetch();
+        }
+        catch(error){
+
+        }
+    }
 
     return(
         <div>
@@ -21,7 +38,7 @@ function PostList() {
                 <Alert type="warning" message="포스팅이 없습니다." />
             )}
             {postList && postList.map(post => (
-            <Post post = {post} key={post.id} />
+            <Post post = {post} key={post.id} handleLike={handleLike}/>
         ))}
         </div>
     );

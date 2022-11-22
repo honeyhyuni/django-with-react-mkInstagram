@@ -2,7 +2,7 @@ import React, {useState } from "react";
 import {Form, Button, Input, Upload, Modal, notification} from "antd";
 import {FrownOutlined, PlusOutlined} from "@ant-design/icons";
 import {getBase64FromFile} from "pages/utils/base64"
-import Axios from "axios";
+import { axiosInstance } from "api";
 import { useAppContext } from "store";
 import { parseErrorMessages } from "pages/utils/forms"; 
 import { useNavigate  } from "react-router-dom";
@@ -33,7 +33,7 @@ export default function PostNewForm(){
     
         const headers = { Authorization: `JWT ${jwtToken}` };
         try {
-          const response = await Axios.post("http://localhost:8000/api/posts/", formData, {
+          const response = await axiosInstance.post("/api/posts/", formData, {
             headers
           });
           console.log("success response :", response);
@@ -136,9 +136,7 @@ export default function PostNewForm(){
               alt="Preview"
             />
           </Modal>
-    
-          <hr />
-          {JSON.stringify(fileList)}
+
         </Form>
       );
     }
